@@ -1,0 +1,89 @@
+erDiagram
+    User {
+        int id PK
+        string username
+        string email
+        string password
+    }
+    
+    Recipe {
+        int id PK
+        string title
+        text description
+        string image_url
+        int cooking_time
+		boolean is_published
+        int servings
+        int user_id FK
+    }
+    
+    Category {
+        int id PK
+        string name
+    }
+    
+    Tag {
+        int id PK
+        string name
+    }
+    
+    Ingredient {
+        int id PK
+        string name
+    }
+    
+    Rating {
+        int id PK
+        int score
+        int user_id FK
+        int recipe_id FK
+    }
+    
+    Favorite {
+        int id PK
+        int user_id FK
+        int recipe_id FK
+    }
+    
+    Comment {
+        int id PK
+        text content
+        datetime created_at
+        int user_id FK
+        int recipe_id FK
+    }
+
+	%% ||--o{ - 1:n one to many
+	%% ||--|| - 1:1 one to one
+	%% o{--o{ - n:n many to many
+	%% o--o{ - n:1 many to one
+
+	%% Ein Benutzer kann viele Rezepte erstellen
+	User ||--o{ Recipe : ""
+
+	%% Ein Benutzer kann viele Bewertungen abgeben
+	User ||--o{ Rating : ""
+
+	%% Ein Benutzer kann viele Rezepte zu Favoriten hinzufügen
+	User ||--o{ Favorite : ""
+
+	%% Ein Benutzer kann viele Kommentare hinterlassen
+	User ||--o{ Comment : ""
+
+	%% Ein Rezept kann mehreren Kategorien zugeordnet sein
+	Recipe }o--o{ Category : ""
+
+	%% Ein Rezept kann viele Zutaten enthalten, eine Zutat kann in mehreren Rezepten verwendet werden
+	Recipe }o--o{ Ingredient : ""
+
+	%% Ein Rezept kann viele Bewertungen haben
+	Recipe ||--o{ Rating : ""
+
+	%% Ein Rezept kann bei mehreren Benutzern in den Favoriten sein
+	Recipe ||--o{ Favorite : ""
+
+	%% Ein Rezept kann viele Kommentare haben
+	Recipe ||--o{ Comment : ""
+
+	%% Ein Rezept kann mehrere Tags haben, ein Tag kann mehreren Rezepten zugeordnet sein
+	Recipe }o--o{ Tag : ""

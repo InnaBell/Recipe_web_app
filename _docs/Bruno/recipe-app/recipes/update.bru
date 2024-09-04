@@ -1,0 +1,23 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/recipes
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "id": 11,
+    "title": "updated title",
+    "content": "{\"text\":\"Updated content of a new recipe\"}"
+  }
+}

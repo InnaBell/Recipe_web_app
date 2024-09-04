@@ -1,0 +1,20 @@
+meta {
+  name: index
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/recipes
+  body: none
+  auth: none
+}
+
+params:query {
+  ~order_by: id
+  ~order_dir: asc
+  ~tag_ids: 1,2,3
+  ~is_grouped: yes
+  ~user_id: 1
+  ~id: 1
+}
