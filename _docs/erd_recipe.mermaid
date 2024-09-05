@@ -9,12 +9,18 @@ erDiagram
     Recipe {
         int id PK
         string title
-        text description
-        string image_url
+        text content
+        int image_id
         int cooking_time
 		boolean is_published
         int servings
         int user_id FK
+    }
+
+	Image {
+		int id PK
+		string pathname
+        int recipe_id FK
     }
     
     Category {
@@ -23,11 +29,6 @@ erDiagram
     }
     
     Tag {
-        int id PK
-        string name
-    }
-    
-    Ingredient {
         int id PK
         string name
     }
@@ -70,11 +71,11 @@ erDiagram
 	%% Ein Benutzer kann viele Kommentare hinterlassen
 	User ||--o{ Comment : ""
 
+	%% Ein Rezept kann ein Bild haben
+	Recipe ||--|| Image : ""
+
 	%% Ein Rezept kann mehreren Kategorien zugeordnet sein
 	Recipe }o--o{ Category : ""
-
-	%% Ein Rezept kann viele Zutaten enthalten, eine Zutat kann in mehreren Rezepten verwendet werden
-	Recipe }o--o{ Ingredient : ""
 
 	%% Ein Rezept kann viele Bewertungen haben
 	Recipe ||--o{ Rating : ""

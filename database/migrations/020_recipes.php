@@ -12,6 +12,9 @@ return new class extends Migration {
       $table->json('content'); // Store the JSON content here
       $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Delete all recipes when user is deleted
       $table->foreignId('image_id')->constrained('images')->cascadeOnDelete(); 
+	  $table->boolean('is_published');
+	  $table->integer('servings');
+	  $table->integer('cooking_time');
       $table->timestamps();
   });
 }
