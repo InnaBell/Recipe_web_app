@@ -8,6 +8,7 @@ use App\Controllers\MailsController;
 use App\Controllers\TagsController;
 use App\Controllers\UploadsController;
 use App\Controllers\UserController;
+use App\Controllers\UserProfileController; 
 use Illuminate\Support\Facades\Route;
 
 // guest endpoints
@@ -22,6 +23,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('/user', [UserController::class, 'show']);
   Route::patch('/user', [UserController::class, 'update']);
   Route::delete('/user', [UserController::class, 'destroy']);
+
+  Route::get('/user/profile', [UserProfileController::class, 'index']);
+  Route::patch('/user/profile', [UserProfileController::class, 'update']);
 
   Route::post('/auth/logout', [AuthController::class, 'logout']);
 

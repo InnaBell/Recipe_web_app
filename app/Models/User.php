@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Bootstrap\Column;
@@ -31,11 +30,14 @@ class User extends Model {
   static function validate(Request $request, $userId = null) {
     $post = $request->method() === 'POST';
     return $request->validate([
-        'email' => [$post ? 'required' : 'sometimes', 'email', 'unique:users,email,' . $userId],
-        'password' => [$post ? 'required' : 'sometimes', 'min:8'],
+        'email' => [$post ? 'required' : 'sometimes', 'email', 'max:255', 'unique:users,email,' . $userId],
+        'password' => [$post ? 'required' : 'sometimes', 'min:8', 'max:255'],
     ]);
   }
 
+  /**
+   * Auto-hash the user's password when it is changed.
+   */
   static function booted() {
     self::saving(function (User $user) {
       if ($user->isDirty('password'))

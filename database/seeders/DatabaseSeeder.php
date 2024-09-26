@@ -8,19 +8,24 @@ use Illuminate\Database\Seeder;
 use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Image;
-
-// faker: https://fakerphp.github.io/formatters/text-and-paragraphs/
+use App\Models\UserProfile;
 
 class DatabaseSeeder extends Seeder {
   function run() {
-	// Users
+	// Users + Profiles
 	////////////////////////////////////////////////////////////////////////////
 	for ($i = 0; $i < 10; $i++) {
-		User::create([
+		$user = User::create([
 			'email' => fake()->unique()->safeEmail(),
-			'password' => bcrypt('password'), // Using bcrypt to hash the password
+			'password' => bcrypt('password'), // 
 		]);
-		}
+
+		UserProfile::create([
+			'user_id' => $user->id, // Connect user_id to user
+			'bio' => fake()->sentence(10),
+			'avatar' => fake()->imageUrl(100, 100, 'people')
+		]);
+	}
 
 	// Images
     ////////////////////////////////////////////////////////////////////////////
