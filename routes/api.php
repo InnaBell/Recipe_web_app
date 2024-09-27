@@ -8,7 +8,8 @@ use App\Controllers\MailsController;
 use App\Controllers\TagsController;
 use App\Controllers\UploadsController;
 use App\Controllers\UserController;
-use App\Controllers\UserProfileController; 
+use App\Controllers\UserProfileController;
+use App\Controllers\FavouritesController;
 use Illuminate\Support\Facades\Route;
 
 // guest endpoints
@@ -17,6 +18,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/recipes', [RecipesController::class, 'index']);
 Route::get('/comments', [CommentsController::class, 'index']);
 Route::get('/tags', [TagsController::class, 'index']);
+Route::get('/favourites/count/{recipeId}', [FavouritesController::class, 'countFavouritesForRecipe']);
 
 // user endpoints
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -36,6 +38,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::post('/comments', [CommentsController::class, 'create']);
   Route::patch('/comments', [CommentsController::class, 'update']);
   Route::delete('/comments', [CommentsController::class, 'destroy']);
+
+  Route::get('/favourites', [FavouritesController::class, 'index']);
+  Route::post('/favourites/toggle', [FavouritesController::class, 'toggle']);
 
   Route::post('/tags', [TagsController::class, 'create']);
   Route::put('/tags/assign', [TagsController::class, 'assign']);

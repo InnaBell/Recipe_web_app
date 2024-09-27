@@ -9,9 +9,11 @@ use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\UserProfile;
+use App\Models\Favourite;
 
 class DatabaseSeeder extends Seeder {
   function run() {
+
 	// Users + Profiles
 	////////////////////////////////////////////////////////////////////////////
 	for ($i = 0; $i < 10; $i++) {
@@ -46,33 +48,46 @@ class DatabaseSeeder extends Seeder {
 		return;
 	}
 
-    for ($i = 0; $i < 10; $i++) {
-      Recipe::create([
-        'title' => fake()->word(),
-        'content' => fake()->sentence(),
-        'user_id' => random_int(1, $userCount),
+	for ($i = 0; $i < 10; $i++) {
+		Recipe::create([
+		'title' => fake()->word(),
+		'content' => fake()->sentence(),
+		'user_id' => random_int(1, $userCount),
 		'image_id' => random_int(1, $imageCount),
 		'is_published' => (bool)random_int(0, 1),
 		'servings' => random_int(1, 6),
 		'cooking_time' => random_int(10, 90),
-      ]);
-    }
+		]);
+	}
 
-    // comments
-    ////////////////////////////////////////////////////////////////////////////////
-    for ($i = 0; $i < 10; $i++) {
-      Comment::create([
-        'text' => fake()->sentence(3),
-        'recipe_id' => random_int(1, 10),
-        'user_id' => random_int(1, 3),
-      ]);
-    }
+	// Comments
+	////////////////////////////////////////////////////////////////////////////////
+	for ($i = 0; $i < 10; $i++) {
+		Comment::create([
+		'text' => fake()->sentence(3),
+		'recipe_id' => random_int(1, 10),
+		'user_id' => random_int(1, 3),
+		]);
+	}
 
-    // tags
-    ////////////////////////////////////////////////////////////////////////////////
-    for ($i = 0; $i < 10; $i++) {
-      Tag::create(['name' => fake()->word()]);
-    }
+	// Tags
+	////////////////////////////////////////////////////////////////////////////////
+	for ($i = 0; $i < 10; $i++) {
+		Tag::create(['name' => fake()->word()]);
+	}
 
-  }
+	// Favourites (Likes)
+	////////////////////////////////////////////////////////////////////////////
+		$recipeCount = Recipe::count();
+
+		if ($recipeCount > 0 && $userCount > 0) {
+		for ($i = 0; $i < 10; $i++) {
+				Favourite::create([
+					'user_id' => random_int(1, $userCount),
+					'recipe_id' => random_int(1, $recipeCount),
+				]);
+			}
+		}
+
+	}
 }

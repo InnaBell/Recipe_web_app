@@ -31,6 +31,10 @@ class Recipe extends Model {
         return $this->belongsToMany(Tag::class); // many-to-many
     }
 
+	public function favourites() {
+		return $this->belongsToMany(Favourite::class); // many-to-many
+	}
+
     public function coverImage() {
         return $this->belongsTo(Image::class, 'image_id'); 
     }
