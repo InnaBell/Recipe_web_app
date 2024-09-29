@@ -32,12 +32,16 @@ class Recipe extends Model {
     }
 
 	public function favourites() {
-		return $this->belongsToMany(Favourite::class); // many-to-many
+		return $this->belongsToMany(Favourite::class);
 	}
 
     public function coverImage() {
         return $this->belongsTo(Image::class, 'image_id'); 
     }
+
+	public function categories() {
+		return $this->belongsToMany(Category::class);
+}
 
     // Remove 'images' from $with if the relationship is unnecessary
     protected $with = ['tags', 'coverImage'];

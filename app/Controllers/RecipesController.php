@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RecipesController {
     function index(Request $request) {
-        $query = Recipe::with(['tags', 'coverImage']); // Only eager load cover image, not all images
+        $query = Recipe::with(['tags', 'coverImage', 'categories']); // Only eager load cover image, not all images
 
         // filter by id
         $id = $request->input('id');
@@ -45,9 +45,19 @@ class RecipesController {
         if ($limit) $query->limit($limit);
         if ($offset) $query->offset($offset);
 
-        // return the results
-        return $query->get();
-    }
+		// filter by categories
+		$categoryIds = $request->input('category_ids');
+		if ($categoryIds) {
+		$categoryIds = explode(',', $categoryIds);
+		$query->whereHas(
+		'categories',
+		fn($q) => $q->whereIn('category_id', $categoryIds)
+	);
+}
+
+		// return the results
+		return $query->get();
+	}
 
     function create(Request $request) {
         // Convert content JSON object to string if it's an array
@@ -71,7 +81,17 @@ class RecipesController {
         }
 
         $recipe = Auth::user()->recipes()->create($payload);
-        return $recipe;
+
+		// Attach categories
+		if ($request->has('category_ids')) {
+			$recipe->categories()->sync($request->input('category_ids'));
+		}
+
+		// Load related tags, cover image, and categories
+		$recipe->load(['tags', 'coverImage', 'categories']);
+
+		// Return the recipe with related data
+		return response()->json($recipe, 200);
     }
 
     function update(Request $request) {
@@ -100,8 +120,15 @@ class RecipesController {
       }
   
       $recipe->update($payload);
-  
-      return response()->json($recipe, 200);
+
+		// Attach categories
+		if ($request->has('category_ids')) {
+			$recipe->categories()->sync($request->input('category_ids'));
+		}
+
+		$recipe->load(['tags', 'coverImage', 'categories']);
+
+		return response()->json($recipe, 200);
   }
 
     function destroy(Request $request) {

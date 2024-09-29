@@ -10,6 +10,7 @@ use App\Controllers\UploadsController;
 use App\Controllers\UserController;
 use App\Controllers\UserProfileController;
 use App\Controllers\FavouritesController;
+use App\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 // guest endpoints
@@ -19,6 +20,7 @@ Route::get('/recipes', [RecipesController::class, 'index']);
 Route::get('/comments', [CommentsController::class, 'index']);
 Route::get('/tags', [TagsController::class, 'index']);
 Route::get('/favourites/count/{recipeId}', [FavouritesController::class, 'countFavouritesForRecipe']);
+Route::get('/categories', [CategoryController::class, 'index']);
 
 // user endpoints
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -41,6 +43,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
   Route::get('/favourites', [FavouritesController::class, 'index']);
   Route::post('/favourites/toggle', [FavouritesController::class, 'toggle']);
+
+  Route::post('/categories', [CategoryController::class, 'create']);
+  Route::put('/categories/assign', [CategoryController::class, 'assign']);
 
   Route::post('/tags', [TagsController::class, 'create']);
   Route::put('/tags/assign', [TagsController::class, 'assign']);

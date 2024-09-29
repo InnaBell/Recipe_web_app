@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\UserProfile;
 use App\Models\Favourite;
+use App\Models\Category;
 
 class DatabaseSeeder extends Seeder {
   function run() {
@@ -72,9 +73,22 @@ class DatabaseSeeder extends Seeder {
 
 	// Tags
 	////////////////////////////////////////////////////////////////////////////////
-	for ($i = 0; $i < 10; $i++) {
-		Tag::create(['name' => fake()->word()]);
+	$tags = [
+		'Vegetarisch',
+		'Vegan',
+		'Glutenfrei',
+		'Laktosefrei',
+		'High-Protein',
+		'Gesund',
+		'Schnell',
+		'Familie',
+		'Kinder',
+	];
+
+	foreach ($tags as $tagName) {
+		Tag::create(['name' => $tagName]);
 	}
+
 
 	// Favourites (Likes)
 	////////////////////////////////////////////////////////////////////////////
@@ -88,6 +102,21 @@ class DatabaseSeeder extends Seeder {
 				]);
 			}
 		}
+
+	// Categories
+	////////////////////////////////////////////////////////////////////////////
+	$categories = [
+		'Vorspeise',
+		'Hauptspeise',
+		'Dessert',
+		'Snack',
+		'Frühstück',
+		'Getränke',
+	];
+
+	foreach ($categories as $categoryName) {
+		Category::create(['name' => $categoryName]);
+	}
 
 	}
 }
