@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::delete('/user', [UserController::class, 'destroy']);
 
   Route::get('/user/profile', [UserProfileController::class, 'index']);
-  Route::patch('/user/profile', [UserProfileController::class, 'update']);
+  Route::post('/user/profile', [UserProfileController::class, 'update']);
 
   Route::post('/auth/logout', [AuthController::class, 'logout']);
 

@@ -10,10 +10,6 @@ class RecipesController {
     function index(Request $request) {
         $query = Recipe::with(['tags', 'coverImage', 'categories']); // Only eager load cover image, not all images
 
-        // filter by id
-        $id = $request->input('id');
-        if ($id) return $query->where('id', $id)->firstOrFail();
-
         // filter by title
         $title = $request->input('title');
         if ($title) $query->where('title', 'like', "%$title%");
@@ -35,13 +31,13 @@ class RecipesController {
         }
 
         // order
-        $orderBy = $request->input('order_by', 'created_at');
-        $orderDir = $request->input('order_dir', 'asc');
+        $orderBy = $request->input('order_by', 'created_at'); // order by id, created_at, updated_at, ...
+        $orderDir = $request->input('order_dir', 'desc'); // desc - new first, asc - old first
         $query->orderBy($orderBy, $orderDir);
 
         // limit, offset
-        $limit = $request->input('limit');
-        $offset = $request->input('offset');
+        $limit = $request->input('limit'); // limit = 10 - return 10 results
+        $offset = $request->input('offset'); // offset = 10 - skip 10 results and start with the 11th
         if ($limit) $query->limit($limit);
         if ($offset) $query->offset($offset);
 

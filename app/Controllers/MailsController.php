@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-// basic mailing example
+
 class MailsController {
   function send(Request $request) {
     // prepare mail
