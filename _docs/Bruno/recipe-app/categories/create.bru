@@ -1,11 +1,11 @@
 meta {
-  name: update
+  name: create
   type: http
-  seq: 3
+  seq: 2
 }
 
-patch {
-  url: {{baseUrl}}/user
+post {
+  url: {{baseUrl}}/categories
   body: json
   auth: none
 }
@@ -16,6 +16,6 @@ headers {
 
 body:json {
   {
-    "email": "foo9@bar.com"
+    "name": "High Protein"
   }
 }

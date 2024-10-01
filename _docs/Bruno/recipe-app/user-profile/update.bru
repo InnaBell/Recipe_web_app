@@ -1,0 +1,25 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/user/profile
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "bio": "Hello! This is new bio!"
+  }
+}
+
+body:multipart-form {
+  avatar: @file(/Users/innabelorusceva/Desktop/Modul 5_Creative studio/Recipe/Recipe_images/alex-lvrs-On2VseHUDXw-unsplash.jpg)
+}

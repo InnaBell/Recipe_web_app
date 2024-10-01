@@ -1,11 +1,11 @@
 meta {
-  name: update
+  name: toggle
   type: http
   seq: 3
 }
 
-patch {
-  url: {{baseUrl}}/user
+post {
+  url: {{baseUrl}}/favourites/toggle
   body: json
   auth: none
 }
@@ -16,6 +16,6 @@ headers {
 
 body:json {
   {
-    "email": "foo9@bar.com"
+    "recipe_id": 4
   }
 }

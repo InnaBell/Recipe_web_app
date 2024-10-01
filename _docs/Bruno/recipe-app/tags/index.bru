@@ -6,6 +6,12 @@ meta {
 
 get {
   url: {{baseUrl}}/tags
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "recipe_id": 11
+  }
 }

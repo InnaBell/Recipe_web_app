@@ -39,7 +39,7 @@ class UserProfileController {
 			$pathname = 'avatars/' . $user->id . '/' . $uniqueFilename;
 
 			Storage::putFileAs(
-				'avatars/',
+				'avatars/' . $user->id,
 				$file,
 				$uniqueFilename
 			);

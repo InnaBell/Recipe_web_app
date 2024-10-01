@@ -5,16 +5,16 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/recipes
+  url: {{baseUrl}}/recipes?order_dir=desc
   body: none
   auth: none
 }
 
 params:query {
+  order_dir: desc
+  ~category_ids: 1
   ~order_by: id
-  ~order_dir: asc
   ~tag_ids: 1,2,3
   ~is_grouped: yes
   ~user_id: 1
-  ~id: 1
 }

@@ -5,13 +5,11 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/comments
+  url: {{baseUrl}}/user/profile
   body: json
   auth: none
 }
 
-body:json {
-  {
-    "recipe_id": 5
-  }
+headers {
+  Authorization: Bearer {{token}}
 }
