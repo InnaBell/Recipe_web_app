@@ -7,11 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController {
-  function show(Request $request) {
-    return Auth::user();
-  }
+function show() {
+	$user = Auth::user()->load('profile');
 
-  function create(Request $request) {
+	if (!$user) {
+		return response()->json(['error' => 'User not authenticated'], 401);
+	}
+
+	return response()->json([
+		'user' => $user
+	], 200);
+}
+
+function create(Request $request) {
 	$payload = User::validate($request);
 	$user = User::create($payload);
 
@@ -27,16 +35,16 @@ class UserController {
 	return response()->json(['user' => $user, 'profile' => $profile], 201);
 }
 
-  function update(Request $request) {
-    $user = Auth::user();
-    $payload = User::validate($request, $user->id);
-    $user->update($payload);
-    return $user;
-  }
+function update(Request $request) {
+	$user = Auth::user();
+	$payload = User::validate($request, $user->id);
+	$user->update($payload);
+	return $user;
+}
 
-  function destroy(Request $request) {
-    $user = Auth::user();
-    $user->delete();
-    return $user;
-  }
+function destroy(Request $request) {
+	$user = Auth::user();
+	$user->delete();
+	return $user;
+}
 }

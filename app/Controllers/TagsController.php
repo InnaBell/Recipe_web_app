@@ -8,17 +8,23 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Recipe;
 
 class TagsController {
-  function index(Request $request) {
-	$recipeId = $request->input('recipe_id');
-	$recipe = Recipe::findOrFail($recipeId);
-	$tags = $recipe->tags;
-	return response()->json($tags, 200);
-  }
+	function index(Request $request) {
+		$recipeId = $request->input('recipe_id');
+		$recipe = Recipe::findOrFail($recipeId);
+		$tags = $recipe->tags;
+		return response()->json($tags, 200);
+	  }
+	
+	  // To show all tags 
+	  function show() {
+		$tags = Tag::all();
+		return response()->json($tags, 200);
+	  }
 
-  function create(Request $request) {
-    $payload = Tag::validate($request);
-    return Tag::create($payload);
-  }
+	  function create(Request $request) {
+		$payload = Tag::validate($request);
+		return Tag::create($payload);
+	  }
 
   function assign(Request $request) {
 	$recipeId = $request->input('recipe_id');

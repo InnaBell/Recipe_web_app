@@ -27,6 +27,10 @@ class User extends Model {
         return $this->hasMany(Image::class);
     }
 
+public function profile() {
+    return $this->hasOne(UserProfile::class);
+}
+
   static function validate(Request $request, $userId = null) {
     $post = $request->method() === 'POST';
     return $request->validate([

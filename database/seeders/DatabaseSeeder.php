@@ -89,6 +89,18 @@ class DatabaseSeeder extends Seeder {
 		Tag::create(['name' => $tagName]);
 	}
 
+	// Recipes + Tags
+	////////////////////////////////////////////////////////////////////////////
+	$recipeCount = Recipe::count();
+	$tagCount = Tag::count();
+
+	if ($recipeCount > 0) {
+		for ($i = 0; $i < 10; $i++) {
+			$recipe = Recipe::find(random_int(1, $recipeCount));
+			$recipe->tags()->attach(random_int(1, $tagCount));
+		}
+	}
+
 
 	// Favourites (Likes)
 	////////////////////////////////////////////////////////////////////////////
@@ -118,5 +130,18 @@ class DatabaseSeeder extends Seeder {
 		Category::create(['name' => $categoryName]);
 	}
 
+	// Recipes + Categories
+	////////////////////////////////////////////////////////////////////////////
+	$recipeCount = Recipe::count();
+	$categoriesCount = Category::count();	
+
+	if ($recipeCount > 0) {
+		for ($i = 0; $i < 10; $i++) {
+			$recipe = Recipe::find(random_int(1, $recipeCount));
+			$recipe->categories()->attach(random_int(1, $categoriesCount));
+		}
+
 	}
+
+}
 }

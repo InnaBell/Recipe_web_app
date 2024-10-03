@@ -19,6 +19,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/recipes', [RecipesController::class, 'index']);
 Route::get('/comments', [CommentsController::class, 'index']);
 Route::get('/tags', [TagsController::class, 'index']);
+Route::get('/tags/all', [TagsController::class, 'show']);
 Route::get('/favourites/count/{recipeId}', [FavouritesController::class, 'countFavouritesForRecipe']);
 Route::get('/categories', [CategoryController::class, 'index']);
 
